@@ -33,3 +33,9 @@ res(World_01)
 World_01<-aggregate(World_01,10)
 res(World_01)
 writeRaster(World_01, "C:/(your folder with the TIF)/World_01.tif",sep="")
+
+
+tmax.crop <- stack("D:/Dahal/ssp585_new1.tif")
+tmax.crop <- stack(tmax.crop)
+tmax.crop <- mean(tmax.crop)
+writeRaster(tmax.crop, "tmax.mean.tif")
