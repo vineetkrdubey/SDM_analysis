@@ -73,9 +73,12 @@ myRespXY <- panda[, c('long', 'lat')]
 
 ##################
 # download the bioclim data:
-bio <- list.files("E:/woldclim/wc10", full.names=T)
-bio <- raster::getData('worldclim', var='bio', res=10)
-bio
+
+bio <- list.files("E:/aconyx/Newmorin/wc10", pattern = ".tif", full.names=TRUE)
+bio<- stack(bio)
+#bio <- raster::getData('worldclim', var='bio', res=10)
+#bio
+dev.off()
 names(bio)
 windows()
 plot(bio[[1]])  
@@ -83,6 +86,7 @@ points(spg)
 e <- drawExtent()
 spg <- crop(spg, e)
 bioc <- crop(bio, e)
+windows()
 plot(bioc[[1]])
 points(spg,col='red')
 
@@ -91,9 +95,10 @@ ex <- raster::extract(bioc,spg)
 head(ex)
 #######################
 corr_enviroscaled = cor(ex)
+windows()
 corrplot(corr_enviroscaled, method = 'number')
-predictors <- stack(predictors)
-predictors <-  dropLayer(predictors,c("bio7","bio10","bio11","bio16","bio17","bio14", "bio15", "bio18", "bio19" ))
+predictors <- stack(bioc)
+predictors <-  dropLayer(predictors,c("wc2.1_10m_bio_1","wc2.1_10m_bio_10","wc2.1_10m_bio_2","bio17","bio14", "bio15", "bio18", "bio19" ))
 
 #####################################################################################
 myExpl <-stack(predictors)
